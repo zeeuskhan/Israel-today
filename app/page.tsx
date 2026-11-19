@@ -1,31 +1,39 @@
 import Link from "next/link";
 import { articles } from "./articles";
 
-const sections = ["ראשי","מבזקים","פוליטיקה","ביטחון","כלכלה","טכנולוגיה","חברה","ירושלים","תל אביב","צפון","דרום"];
+const sections = ["ראשי","חדשות","פוליטיקה","ביטחון","כלכלה","טכנולוגיה","חברה","ירושלים","תל אביב","צפון","דרום"];
+const lead = articles[0];
 
 export default function Home() {
+  const categories = ["ביטחון","פוליטיקה","כלכלה","חדשות מקומיות"];
   return (
     <>
       <div className="topline"><div className="container"><span>יום חמישי, 19 בנובמבר 2026</span><span>חדשות ישראל • עברית</span></div></div>
       <header className="masthead"><div className="container">
-        <div className="brandrow"><div><Link href="/" className="brand">Israel <span>Today</span></Link><div className="tagline">חדשות ישראל — תמונה ברורה, מידע מאומת</div></div><div className="search">חיפוש באתר　⌕</div></div>
-        <nav className="nav" aria-label="ניווט ראשי">{sections.map(s=><a href="#latest" key={s}>{s}</a>)}</nav>
+        <div className="brandrow"><div><Link href="/" className="brand">Israel <span>Today</span></Link><div className="tagline">חדשות ישראל — דיווחים, הקשר ומקורות</div></div><div className="search">חדשות מישראל, כל היום</div></div>
+        <nav className="nav" aria-label="ניווט ראשי">{sections.map(s=><a href={s==="ראשי"?"#top":`#category-${s}`} key={s}>{s}</a>)}</nav>
       </div></header>
-      <div className="breaking"><div className="container"><strong>הבהרה</strong><span>מדריכי הסבר ותוכן רקע. דיווחים חדשותיים חיים יפורסמו רק לאחר אימות מול מקורות.</span></div></div>
-      <main className="container">
-        <section className="hero-grid">
-          <article className="hero"><div className="hero-content"><span className="kicker">ישראל • מדריכי חדשות והסבר</span><h1>החדשות מישראל, בעברית ברורה ומדויקת</h1><p>כלכלה, פוליטיקה, תחבורה וטכנולוגיה — עם הקשר, הסברים וקישורים למקורות רשמיים.</p></div></article>
-          <div className="side-stack">
-            <article className="side-story"><span className="category">עקרונות המערכת</span><h2>קודם בודקים. אחר כך מפרסמים.</h2><span className="meta">הפרדה בין עובדות, פרשנות ומידע שטרם אומת</span></article>
-            <article className="side-story"><span className="category">ישראל בלבד</span><h2>מדריכים בנושאים שמשפיעים על החיים בישראל</h2><span className="meta">כלכלה • חברה • ממשל • טכנולוגיה</span></article>
-            <article className="side-story"><span className="category">תוכן חדש</span><h2>5 כתבות ומדריכים לקריאה</h2><span className="meta">כל כותרת מובילה לעמוד כתבה מלא</span></article>
+      <div className="breaking"><div className="container"><strong>מבזקי היום</strong><span>עדכונים שוטפים מישראל — כל ידיעה כוללת ייחוס למקורות וקישור להמשך קריאה.</span></div></div>
+      <main className="container" id="top">
+        <section className="news-mast">
+          <div className="lead-story">
+            <span className="category">{lead.category} • כתבה מרכזית</span>
+            <h1><Link href={`/articles/${lead.slug}`}>{lead.title}</Link></h1>
+            <p>{lead.description}</p>
+            <div className="meta">עודכן: {lead.displayDate} • {lead.readTime} • מערכת Israel Today</div>
+            <Link className="read-more" href={`/articles/${lead.slug}`}>לכתבה המלאה ←</Link>
           </div>
+          <aside className="latest-panel">
+            <h2>הכתבות האחרונות</h2>
+            {articles.slice(1,5).map((article)=><div className="latest-item" key={article.slug}><span className="category">{article.category}</span><h3><Link href={`/articles/${article.slug}`}>{article.title}</Link></h3><span className="meta">{article.displayDate}</span></div>)}
+          </aside>
         </section>
-        <div className="section-head" id="latest"><h2>כתבות ומדריכים בישראל</h2><span className="meta">תוכן הסבר עם קישורים למקורות רשמיים</span></div>
-        <section className="news-grid">{articles.map((article)=><article className="news-card" key={article.slug}><div className="thumb" aria-hidden="true">{article.category}</div><div className="news-card-body"><span className="category">{article.category}</span><h3><Link href={`/articles/${article.slug}`}>{article.title}</Link></h3><p>{article.description}</p><div className="meta">{article.date}　•　{article.readTime}</div><Link className="read-more" href={`/articles/${article.slug}`}>לקריאת הכתבה ←</Link></div></article>)}</section>
-        <div className="notice">הערת מערכת: אלה מדריכי הסבר כלליים ולא עדכוני חדשות בזמן אמת. מידע משתנה יש לאמת מול המקורות הרשמיים המקושרים בכל כתבה.</div>
+        <div className="section-head" id="latest"><h2>כל החדשות מישראל</h2><span className="meta">{articles.length} כתבות • עדכון 19.11.2026</span></div>
+        <section className="news-grid">{articles.map((article)=><article className="news-card" key={article.slug}><div className="thumb"><span>{article.category}</span></div><div className="news-card-body"><span className="category">{article.category}</span><h3><Link href={`/articles/${article.slug}`}>{article.title}</Link></h3><p>{article.description}</p><div className="meta">{article.displayDate}　•　{article.readTime}</div><Link className="read-more" href={`/articles/${article.slug}`}>לקריאת הכתבה ←</Link></div></article>)}</section>
+        {categories.map((category)=><section className="category-section" id={`category-${category}`} key={category}><div className="section-head"><h2>{category}</h2></div><div className="category-links">{articles.filter(a=>a.category===category || (category==="ביטחון" && a.category==="ביטחון ודיפלומטיה")).map(article=><Link href={`/articles/${article.slug}`} key={article.slug}>{article.title} <span>←</span></Link>)}</div></section>)}
+        <div className="notice"><strong>שקיפות מערכתית:</strong> הכתבות מבוססות על המקורות המקושרים בכל עמוד. דיווחים מיוחסים לכלי התקשורת או לרשויות שמסרו אותם; טענות שטרם אומתו מוצגות כטענות. אין מדובר בעדכון חי אוטומטי.</div>
       </main>
-      <footer className="footer"><div className="container footer-inner"><div><div className="brand" style={{color:"white"}}>Israel <span>Today</span></div><p>חדשות מישראל. דיוק, שקיפות והפרדה בין עובדות, פרשנות ודיווחים ראשוניים.</p></div><div><strong>מידע</strong><p>אודות • צור קשר • מדיניות פרטיות • מדיניות תיקונים</p><small>© 2026 Israel Today</small></div></div></footer>
+      <footer className="footer"><div className="container footer-inner"><div><div className="brand" style={{color:"white"}}>Israel <span>Today</span></div><p>חדשות מישראל — דיוק, שקיפות וקישורים למקורות.</p></div><div><strong>מידע</strong><p>אודות • צור קשר • מדיניות פרטיות • מדיניות תיקונים</p><small>© 2026 Israel Today</small></div></div></footer>
     </>
   );
 }
