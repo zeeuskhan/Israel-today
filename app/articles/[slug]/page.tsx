@@ -3,7 +3,7 @@ import Link from "next/link";
 import { articles, getArticle } from "../../articles";
 import { notFound } from "next/navigation";
 
-const baseUrl = "https://israel-today-darvesh-projects.vercel.app";
+const baseUrl = "https://todayisrael.vercel.app";
 
 export const dynamicParams = false;
 
