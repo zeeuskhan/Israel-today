@@ -5,7 +5,7 @@ const sections = ["ראשי","חדשות","פוליטיקה","ביטחון","כ�
 const lead = articles[0];
 
 export default function Home() {
-  const categories = ["ביטחון","פוליטיקה","כלכלה","חדשות מקומיות"];
+  const categories = [...new Set(articles.map((article) => article.category))];
   return (
     <>
       <div className="topline"><div className="container"><span>יום חמישי, 20 בנובמבר 2026</span><span>חדשות ישראל • עברית</span></div></div>
@@ -33,7 +33,7 @@ export default function Home() {
         {categories.map((category)=><section className="category-section" id={`category-${category}`} key={category}><div className="section-head"><h2>{category}</h2></div><div className="category-links">{articles.filter(a=>a.category===category || (category==="ביטחון" && a.category==="ביטחון ודיפלומטיה")).map(article=><Link href={`/articles/${article.slug}`} key={article.slug}>{article.title} <span>←</span></Link>)}</div></section>)}
         <div className="notice"><strong>שקיפות מערכתית:</strong> הכתבות מבוססות על המקורות המקושרים בכל עמוד. דיווחים מיוחסים לכלי התקשורת או לרשויות שמסרו אותם; טענות שטרם אומתו מוצגות כטענות. אין מדובר בעדכון חי אוטומטי.</div>
       </main>
-      <footer className="footer"><div className="container footer-inner"><div><div className="brand" style={{color:"white"}}>Israel <span>Today</span></div><p>חדשות מישראל — דיוק, שקיפות וקישורים למקורות.</p></div><div><strong>מידע</strong><p>אודות • צור קשר • מדיניות פרטיות • מדיניות תיקונים</p><small>© 2026 Israel Today</small></div></div></footer>
+      <footer className="footer"><div className="container footer-inner"><div><div className="brand" style={{color:"white"}}>Israel <span>Today</span></div><p>חדשות מישראל — דיוק, שקיפות וקישורים למקורות.</p></div><div><strong>מידע</strong><nav className="footer-links" aria-label="קישורי מידע"><Link href="/about">אודות</Link>　<Link href="/editorial-policy">מדיניות מערכת ותיקונים</Link>　<Link href="/privacy">מדיניות פרטיות</Link></nav><small>© 2026 Israel Today</small></div></div></footer>
     </>
   );
 }
