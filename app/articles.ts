@@ -416,7 +416,7 @@ export const articles: Article[] = [
     ],
     sources: [{ label: "Associated Press — Israel says it struck at Hezbollah, Iraq compromises with a militia group and other Mideast news", url: "https://apnews.com/article/e72472c557057943cab32010666b29bf" }],
     sourceNote: "הפרטים על הפשרה מיוחסים לדיווח Associated Press. הכתבה אינה קובעת שהשליטה הממשלתית באזור הושלמה."
-  },,
+  },
   {
     "slug": "nvidia-israel-networking-business-21-billion-2026",
     "category": "כלכלה וטכנולוגיה",
