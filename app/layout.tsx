@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   },
   description: "חדשות מישראל: עדכונים, ביטחון, פוליטיקה, כלכלה, טכנולוגיה וחברה.",
   metadataBase: new URL("https://todayisrael.vercel.app"),
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", types: { "application/rss+xml": "/rss.xml" } },
   openGraph: {
     type: "website",
     locale: "he_IL",
