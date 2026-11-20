@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     template: "%s | Israel Today"
   },
   description: "חדשות מישראל: עדכונים, ביטחון, פוליטיקה, כלכלה, טכנולוגיה וחברה.",
-  metadataBase: new URL("https://israel-today-darvesh-projects.vercel.app"),
+  metadataBase: new URL("https://todayisrael.vercel.app"),
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -23,7 +23,7 @@ const organization = {
   "@context": "https://schema.org",
   "@type": "NewsMediaOrganization",
   name: "Israel Today",
-  url: "https://israel-today-darvesh-projects.vercel.app",
+  url: "https://todayisrael.vercel.app",
   inLanguage: "he"
 };
 
