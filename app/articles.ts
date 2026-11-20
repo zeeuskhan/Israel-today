@@ -1475,7 +1475,7 @@ export const articles: Article[] = [
       }
     ],
     "sourceNote": "הטענה על הקמת המתחם מיוחסת לדיווח Haaretz; תגובת צה״ל מובאת כפי שצוטטה. מעמד הקרקע והליכי האכיפה מחייבים אימות מול הרשויות."
-  }
+  },
   {
     "slug": "herzog-calls-action-after-200th-arab-society-homicide-2026",
     "category": "חברה וביטחון אישי",
@@ -1809,7 +1809,7 @@ export const articles: Article[] = [
       }
     ],
     "sourceNote": "ההרשעה והמעצר המחודש מיוחסים לדיווח The Jerusalem Post מ־16 בנובמבר 2026. יש לבדוק החלטות בית משפט לפני פרסום פרטים נוספים."
-  }
+  },
   {
     "slug": "bank-israel-foreign-exchange-reserves-october-2026-analysis",
     "category": "כלכלה ופיננסים",
