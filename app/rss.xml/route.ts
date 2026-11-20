@@ -1,6 +1,6 @@
 import { articles } from "../articles";
 
-const baseUrl = "https://israel-today-darvesh-projects.vercel.app";
+const baseUrl = "https://todayisrael.vercel.app";
 
 function escapeXml(value: string) {
   return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"","&quot;").replaceAll("'","&apos;");
