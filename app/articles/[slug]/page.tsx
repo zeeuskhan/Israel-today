@@ -61,10 +61,24 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     isAccessibleForFree: true,
     mainEntityOfPage: { "@type": "WebPage", "@id": `${baseUrl}/articles/${article.slug}` }
   };
+  // Rank related stories by shared keywords first, then by category and recency.
+  const articleKeywords = new Set(article.keywords.map((keyword) => keyword.trim().toLocaleLowerCase("he")));
   const relatedArticles = articles
-    .filter((candidate) => candidate.slug !== article.slug && candidate.category === article.category)
-    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
-    .slice(0, 3);
+    .filter((candidate) => candidate.slug !== article.slug)
+    .map((candidate) => {
+      const sharedKeywords = candidate.keywords.filter((keyword) =>
+        articleKeywords.has(keyword.trim().toLocaleLowerCase("he"))
+      ).length;
+      const sameCategory = candidate.category === article.category ? 2 : 0;
+      return { article: candidate, score: sharedKeywords * 3 + sameCategory };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) =>
+      b.score - a.score ||
+      Date.parse(b.article.publishedAt) - Date.parse(a.article.publishedAt)
+    )
+    .slice(0, 5)
+    .map(({ article: related }) => related);
 
   const breadcrumbData = {
     "@context": "https://schema.org",
@@ -103,18 +117,24 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <aside className="sources">
             <h2>מקורות וקישורים</h2>
             <p>הכתבה מבוססת על המקורות הבאים. מומלץ לעיין בדיווח המקורי לפרטים המלאים ולעדכונים:</p>
-            <ul>{article.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a></li>)}</ul>
+            <ul>{article.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul>
           </aside>
           <p className="editorial-note">{article.sourceNote}</p>
           {relatedArticles.length > 0 && (
             <section className="sources" aria-labelledby="related-articles-title">
-              <h2 id="related-articles-title">כתבות נוספות בנושא {article.category}</h2>
+              <h2 id="related-articles-title">כתבות קשורות והקשר נוסף</h2>
+              <p>המשך לקרוא כתבות בעלות מילות מפתח ונושאים משותפים. הקישורים מובילים לעמודים פנימיים באתר.</p>
               <ul>{relatedArticles.map((related) => (
                 <li key={related.slug}><Link href={`/articles/${related.slug}`}>{related.title}</Link></li>
               ))}</ul>
             </section>
           )}
-          <div className="more-link"><Link href="/">← חזרה לעמוד הראשי ולכתבות נוספות</Link></div>
+          <nav className="more-link" aria-label="קישורים נוספים">
+            <Link href={categoryPath(article.category)}>כל כתבות {article.category}</Link>　•　
+            <Link href="/search">חיפוש כתבות נוספות</Link>　•　
+            <Link href="/editorial-policy">מדיניות המקורות והתיקונים</Link>　•　
+            <Link href="/">← חזרה לעמוד הראשי</Link>
+          </nav>
         </article>
       </main>
       <footer className="footer"><div className="container"><div className="brand" style={{color:"white"}}>Israel <span>Today</span></div><p>חדשות מישראל — דיוק, שקיפות וקישורים למקורות.</p><small>© 2026 Israel Today</small></div></footer>
