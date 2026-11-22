@@ -22,6 +22,7 @@ export default function EditorialTeam() {
     <main dir="rtl" style={{ maxWidth: 820, margin: "48px auto", padding: "0 20px", fontFamily: "Arial,sans-serif", lineHeight: 1.9 }}>
       <Link href="/">← Israel Today</Link>
       <h1>מערכת Israel Today</h1>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profile) }} />
       <p>זהו עמוד הייחוס של הגוף המפרסם באתר. כאשר כתבה אינה כוללת קרדיט אישי מאומת, היא מיוחסת למערכת Israel Today.</p>
       <h2>תחומי סיקור</h2>
       <p>ישראל, פוליטיקה, ביטחון, כלכלה, חברה, יחסי חוץ וחדשות מקומיות.</p>
