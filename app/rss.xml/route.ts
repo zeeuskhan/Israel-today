@@ -7,7 +7,7 @@ function escapeXml(value: string) {
 }
 
 export async function GET() {
-  const items = articles.map((article) => `
+  const items = [...articles].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt)).map((article) => `
     <item>
       <title>${escapeXml(article.title)}</title>
       <link>${baseUrl}/articles/${article.slug}</link>
