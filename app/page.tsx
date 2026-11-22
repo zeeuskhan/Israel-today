@@ -26,10 +26,10 @@ export default function Home() {
     <>
       <div className="topline"><div className="container"><span>{today}</span><span>חדשות ישראל • עברית</span></div></div>
       <header className="masthead"><div className="container">
-        <div className="brandrow"><div><Link href="/" className="brand">Israel <span>Today</span></Link><div className="tagline">חדשות ישראל — דיווחים, הקשר ומקורות</div></div><div className="search">חדשות מישראל, כל היום</div></div>
+        <div className="brandrow"><div><Link href="/" className="brand">Israel <span>Today</span></Link><div className="tagline">חדשות ישראל — דיווחים, הקשר ומקורות</div></div><div className="search">חדשות ועדכונים מישראל</div></div>
         <nav className="nav" aria-label="ניווט ראשי"><a href="#top">ראשי</a><a href="#latest">כל החדשות</a>{categories.map(category=><Link href={categoryPath(category)} key={category}>{category}</Link>)}</nav>
       </div></header>
-      <div className="breaking"><div className="container"><strong>מבזקי היום</strong><span>עדכונים שוטפים מישראל — כל ידיעה כוללת ייחוס למקורות וקישור להמשך קריאה.</span></div></div>
+      <div className="breaking"><div className="container"><strong>העדכונים האחרונים</strong><span>הכתבות האחרונות מישראל — כל ידיעה כוללת ייחוס למקורות וקישור לפרסום המקורי.</span></div></div>
       <main className="container" id="top">
         <section className="news-mast">
           <div className="lead-story">
