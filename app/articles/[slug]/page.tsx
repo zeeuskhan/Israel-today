@@ -82,7 +82,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <header className="masthead"><div className="container">
         <Link href="/" className="brand">Israel <span>Today</span></Link>
         <div className="tagline">חדשות ישראל — דיווחים, הקשר ומקורות</div>
-        <nav className="nav" aria-label="ניווט ראשי"><Link href="/">ראשי</Link><Link href="/#latest">כל הכתבות</Link></nav>
+        <nav className="nav" aria-label="ניווט ראשי"><Link href="/">ראשי</Link><Link href="/#latest">כל הכתבות</Link><Link href="/search">חיפוש</Link></nav>
       </div></header>
       <main className="container">
         <article className="article" itemScope itemType="https://schema.org/NewsArticle">
