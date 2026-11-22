@@ -4,14 +4,28 @@ import { articles } from "./articles";
 const baseUrl = "https://todayisrael.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const latestArticleDate = articles.reduce(
+    (latest, article) => Math.max(latest, new Date(article.publishedAt).getTime()),
+    0
+  );
+
   return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "hourly", priority: 1 },
-    ...["about", "editorial-policy", "privacy"].map((path) => ({ url: `${baseUrl}/${path}`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.4 })),
+    {
+      url: baseUrl,
+      lastModified: latestArticleDate ? new Date(latestArticleDate) : undefined,
+      changeFrequency: "hourly",
+      priority: 1
+    },
+    ...["about", "editorial-policy", "privacy"].map((path) => ({
+      url: `${baseUrl}/${path}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.3
+    })),
     ...articles.map((article) => ({
       url: `${baseUrl}/articles/${article.slug}`,
       lastModified: new Date(article.publishedAt),
       changeFrequency: "daily" as const,
-      priority: 0.9
+      priority: 0.8
     }))
   ];
 }
