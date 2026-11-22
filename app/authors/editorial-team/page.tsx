@@ -2,7 +2,8 @@ import Link from "next/link";
 
 export const metadata = {
   title: "מערכת Israel Today",
-  description: "מידע על הייחוס המערכתי, תחומי הסיקור ועקרונות הפרסום של Israel Today."
+  description: "מידע על הייחוס המערכתי, תחומי הסיקור ועקרונות הפרסום של Israel Today.",
+  alternates: { canonical: "/authors/editorial-team" }
 };
 
 const profile = {
