@@ -2,7 +2,8 @@ import Link from "next/link";
 
 export const metadata = {
   title: "אודות Israel Today",
-  description: "אודות אתר Israel Today, תחומי הסיקור, מקורות המידע והעקרונות המערכתיים."
+  description: "אודות אתר Israel Today, תחומי הסיקור, מקורות המידע והעקרונות המערכתיים.",
+  alternates: { canonical: "/about" }
 };
 
 export default function About() {
