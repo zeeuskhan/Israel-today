@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { articles } from "./articles";
+import { categoryPath } from "./category-utils";
 
 const baseUrl = "https://todayisrael.vercel.app";
 
@@ -20,6 +21,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/${path}`,
       changeFrequency: "yearly" as const,
       priority: 0.3
+    })),
+    ...Array.from(new Set(articles.map((article) => article.category))).map((category) => ({
+      url: `${baseUrl}${categoryPath(category)}`,
+      changeFrequency: "daily" as const,
+      priority: 0.7
     })),
     ...articles.map((article) => ({
       url: `${baseUrl}/articles/${article.slug}`,
