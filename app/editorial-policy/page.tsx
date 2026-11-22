@@ -2,7 +2,8 @@ import Link from "next/link";
 
 export const metadata = {
   title: "מדיניות מערכת, מקורות ותיקונים",
-  description: "העקרונות של Israel Today לאימות מידע, ייחוס מקורות, תיקונים ושקיפות."
+  description: "העקרונות של Israel Today לאימות מידע, ייחוס מקורות, תיקונים ושקיפות.",
+  alternates: { canonical: "/editorial-policy" }
 };
 
 export default function EditorialPolicy() {
