@@ -17,8 +17,10 @@ export function generateStaticParams() {
   return Object.values(categorySlugs).map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ page?: string }> }): Promise<Metadata> {
   const { slug } = await params;
+  const query = await searchParams;
+  const page = Math.max(1, Number.parseInt(query.page || "1", 10) || 1);
   const category = categoryFromSlug(slug);
   if (!category) return {};
   const articleCount = articles.filter((article) => article.category === category || (category === "ביטחון" && article.category === "ביטחון ודיפלומטיה")).length;
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     robots: articleCount < 2 ? { index: false, follow: true } : { index: true, follow: true },
     title: `חדשות ${category} בישראל — עדכונים וכתבות`,
     description: `כל הכתבות והעדכונים בנושא ${category} בישראל. דיווחים בעברית, הקשר וקישורים למקורות.`,
-    alternates: { canonical: categoryPath(category) },
+    alternates: { canonical: page > 1 ? `${categoryPath(category)}?page=${page}` : categoryPath(category) },
     openGraph: {
       type: "website",
       locale: "he_IL",
