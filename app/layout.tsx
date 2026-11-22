@@ -25,7 +25,11 @@ const organization = {
   "@type": "NewsMediaOrganization",
   name: "Israel Today",
   url: "https://todayisrael.vercel.app",
-  inLanguage: "he"
+  inLanguage: "he-IL",
+  areaServed: { "@type": "Country", name: "Israel" },
+  publishingPrinciples: "https://todayisrael.vercel.app/editorial-policy",
+  ethicsPolicy: "https://todayisrael.vercel.app/editorial-policy",
+  correctionsPolicy: "https://todayisrael.vercel.app/editorial-policy"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
