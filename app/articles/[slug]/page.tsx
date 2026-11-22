@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { articles, getArticle } from "../../articles";
+import { categoryPath } from "../../category-utils";
 import { notFound } from "next/navigation";
 
 const baseUrl = "https://todayisrael.vercel.app";
@@ -85,7 +86,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </div></header>
       <main className="container">
         <article className="article" itemScope itemType="https://schema.org/NewsArticle">
-          <nav className="breadcrumbs" aria-label="פירורי לחם"><Link href="/">ראשי</Link>　/　<span>{article.category}</span></nav>
+          <nav className="breadcrumbs" aria-label="פירורי לחם"><Link href="/">ראשי</Link>　/　<Link href={categoryPath(article.category)}>{article.category}</Link></nav>
           <div className="article-category">{article.category}</div>
           <h1 itemProp="headline">{article.title}</h1>
           <p className="article-lead" itemProp="description">{article.intro}</p>
