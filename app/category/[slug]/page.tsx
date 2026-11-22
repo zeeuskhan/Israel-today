@@ -6,6 +6,10 @@ import { categoryFromSlug, categoryPath, categorySlugs } from "../../category-ut
 
 const baseUrl = "https://todayisrael.vercel.app";
 
+function formatPublishedDate(value: string) {
+  return new Intl.DateTimeFormat("he-IL", { timeZone: "Asia/Jerusalem", dateStyle: "long" }).format(new Date(value));
+}
+
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -16,7 +20,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const category = categoryFromSlug(slug);
   if (!category) return {};
+  const articleCount = articles.filter((article) => article.category === category || (category === "ביטחון" && article.category === "ביטחון ודיפלומטיה")).length;
   return {
+    robots: articleCount < 2 ? { index: false, follow: true } : { index: true, follow: true },
     title: `חדשות ${category} בישראל — עדכונים וכתבות`,
     description: `כל הכתבות והעדכונים בנושא ${category} בישראל. דיווחים בעברית, הקשר וקישורים למקורות.`,
     alternates: { canonical: categoryPath(category) },
@@ -74,7 +80,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             <div className="category-links">
               {items.map((article) => (
                 <article className="category-entry" key={article.slug}>
-                  <span className="meta">{article.displayDate}　•　{article.readTime}</span>
+                  <span className="meta">{formatPublishedDate(article.publishedAt)}　•　{article.readTime}</span>
                   <h2><Link href={`/articles/${article.slug}`}>{article.title}</Link></h2>
                   <p>{article.description}</p>
                 </article>
