@@ -71,7 +71,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "ראשי", item: baseUrl },
-      { "@type": "ListItem", position: 2, name: article.category, item: `${baseUrl}/#category-${article.category}` },
+      { "@type": "ListItem", position: 2, name: article.category, item: `${baseUrl}${categoryPath(article.category)}` },
       { "@type": "ListItem", position: 3, name: article.title, item: `${baseUrl}/articles/${article.slug}` }
     ]
   };
