@@ -4,18 +4,22 @@ import { articles } from "./articles";
 import { categoryPath } from "./category-utils";
 import Pagination from "./components/pagination";
 
-export const metadata: Metadata = {
-  title: "חדשות ישראל היום: פוליטיקה, ביטחון, כלכלה וחברה",
-  description: "חדשות ישראל בעברית: כתבות ועדכונים על פוליטיקה, ביטחון, כלכלה, חברה ויחסי חוץ, עם קישורים למקורות.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "he_IL",
-    siteName: "Israel Today",
-    title: "חדשות ישראל היום | Israel Today",
-    description: "חדשות ועדכונים מישראל בעברית — פוליטיקה, ביטחון, כלכלה וחברה."
-  }
-};
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ page?: string }> }): Promise<Metadata> {
+  const params = await searchParams;
+  const page = Math.max(1, Number.parseInt(params.page || "1", 10) || 1);
+  return {
+    title: "חדשות ישראל היום: פוליטיקה, ביטחון, כלכלה וחברה",
+    description: "חדשות ישראל בעברית: כתבות ועדכונים על פוליטיקה, ביטחון, כלכלה, חברה ויחסי חוץ, עם קישורים למקורות.",
+    alternates: { canonical: page > 1 ? `/?page=${page}` : "/" },
+    openGraph: {
+      type: "website",
+      locale: "he_IL",
+      siteName: "Israel Today",
+      title: "חדשות ישראל היום | Israel Today",
+      description: "חדשות ועדכונים מישראל בעברית — פוליטיקה, ביטחון, כלכלה וחברה."
+    }
+  };
+}
 
 const sortedArticles = [...articles].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 const lead = sortedArticles[0];
