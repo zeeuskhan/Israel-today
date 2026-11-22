@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { articles } from "../articles";
+import { categoryPath } from "../category-utils";
 import Pagination from "../components/pagination";
 
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         {query && visible.length === 0 && <section className="empty-state"><h2>לא נמצאו כתבות</h2><p>נסו מילת חיפוש אחרת או עברו לעמוד הראשי.</p><Link className="read-more" href="/">לכל החדשות ←</Link></section>}
         <section className="search-results">
           {visible.map((article) => <article className="search-result" key={article.slug}>
-            <div className="meta"><Link href={`/category/${article.category === "פוליטיקה" ? "politics" : article.category === "חדשות מקומיות" ? "local-news" : article.category === "ביטחון" ? "security" : article.category === "כלכלה" ? "economy" : "regional"}`}>{article.category}</Link>　•　{new Intl.DateTimeFormat("he-IL", { timeZone: "Asia/Jerusalem", dateStyle: "long" }).format(new Date(article.publishedAt))}</div>
+            <div className="meta"><Link href={categoryPath(article.category)}>{article.category}</Link>　•　{new Intl.DateTimeFormat("he-IL", { timeZone: "Asia/Jerusalem", dateStyle: "long" }).format(new Date(article.publishedAt))}</div>
             <h2><Link href={`/articles/${article.slug}`}>{article.title}</Link></h2>
             <p>{article.description}</p>
           </article>)}
