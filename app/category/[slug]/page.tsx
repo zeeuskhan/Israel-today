@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { articles } from "../../articles";
 import { categoryFromSlug, categoryPath, categorySlugs } from "../../category-utils";
+import Pagination from "../../components/pagination";
 
 const baseUrl = "https://todayisrael.vercel.app";
 
@@ -36,14 +37,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CategoryPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ page?: string }> }) {
   const { slug } = await params;
+  const query = await searchParams;
   const category = categoryFromSlug(slug);
   if (!category) notFound();
 
   const items = articles
     .filter((article) => article.category === category || (category === "ביטחון" && article.category === "ביטחון ודיפלומטיה"))
     .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+
+  const pageSize = 10;
+  const requestedPage = Math.max(1, Number.parseInt(query.page || "1", 10) || 1);
+  const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+  const currentPage = Math.min(requestedPage, totalPages);
+  const visibleItems = items.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const collectionData = {
     "@context": "https://schema.org",
@@ -78,7 +86,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           <p className="article-lead">כל העדכונים והכתבות בנושא {category}. המידע מוצג עם ייחוס למקורות וקישורים לדיווחים המקוריים.</p>
           {items.length > 0 ? (
             <div className="category-links">
-              {items.map((article) => (
+              {visibleItems.map((article) => (
                 <article className="category-entry" key={article.slug}>
                   <span className="meta">{formatPublishedDate(article.publishedAt)}　•　{article.readTime}</span>
                   <h2><Link href={`/articles/${article.slug}`}>{article.title}</Link></h2>
@@ -87,6 +95,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
               ))}
             </div>
           ) : <p>טרם פורסמו כתבות בנושא זה.</p>}
+          <Pagination currentPage={currentPage} totalPages={totalPages} hrefForPage={(page) => `${categoryPath(category)}?page=${page}`}/>
         </section>
         <p className="more-link"><Link href="/">← חזרה לכל חדשות ישראל</Link></p>
       </main>
