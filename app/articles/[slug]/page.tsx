@@ -56,10 +56,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       inLanguage: "he-IL"
     },
     articleBody: article.sections.map(section => section.paragraphs.join(" ")).join(" "),
-    wordCount: article.sections.reduce((total, section) => total + section.paragraphs.join(" ").trim().split(/\\s+/).filter(Boolean).length, 0),
+    wordCount: article.sections.reduce((total, section) => total + section.paragraphs.join(" ").trim().split(/\s+/).filter(Boolean).length, 0),
     isAccessibleForFree: true,
     mainEntityOfPage: { "@type": "WebPage", "@id": `${baseUrl}/articles/${article.slug}` }
   };
+  const relatedArticles = articles
+    .filter((candidate) => candidate.slug !== article.slug && candidate.category === article.category)
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+    .slice(0, 3);
+
   const breadcrumbData = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -99,6 +104,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <ul>{article.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a></li>)}</ul>
           </aside>
           <p className="editorial-note">{article.sourceNote}</p>
+          {relatedArticles.length > 0 && (
+            <section className="sources" aria-labelledby="related-articles-title">
+              <h2 id="related-articles-title">כתבות נוספות בנושא {article.category}</h2>
+              <ul>{relatedArticles.map((related) => (
+                <li key={related.slug}><Link href={`/articles/${related.slug}`}>{related.title}</Link></li>
+              ))}</ul>
+            </section>
+          )}
           <div className="more-link"><Link href="/">← חזרה לעמוד הראשי ולכתבות נוספות</Link></div>
         </article>
       </main>
