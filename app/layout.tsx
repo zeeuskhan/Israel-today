@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Israel Today | חדשות ישראל",
     description: "כל החדשות מישראל במקום אחד"
   },
+  verification: { google: "ItLByOSQAwzJ0a_YDS2lb1-6swGae5hQRnJUr4TuShg" },
   robots: { index: true, follow: true }
 };
 
