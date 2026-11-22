@@ -17,7 +17,17 @@ export const metadata: Metadata = {
     description: "כל החדשות מישראל במקום אחד"
   },
   verification: { google: "ItLByOSQAwzJ0a_YDS2lb1-6swGae5hQRnJUr4TuShg" },
-  robots: { index: true, follow: true }
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
+  }
 };
 
 const organization = {
