@@ -77,7 +77,7 @@ export default async function CategoryPage({ params, searchParams }: { params: P
       <header className="masthead"><div className="container">
         <Link href="/" className="brand">Israel <span>Today</span></Link>
         <div className="tagline">חדשות ישראל — דיווחים, הקשר ומקורות</div>
-        <nav className="nav" aria-label="ניווט ראשי"><Link href="/">ראשי</Link><Link href="/#latest">כל הכתבות</Link></nav>
+        <nav className="nav" aria-label="ניווט ראשי"><Link href="/">ראשי</Link><Link href="/#latest">כל הכתבות</Link><Link href="/search">חיפוש</Link></nav>
       </div></header>
       <main className="container">
         <nav className="breadcrumbs" aria-label="פירורי לחם"><Link href="/">ראשי</Link>　/　<span>{category}</span></nav>
