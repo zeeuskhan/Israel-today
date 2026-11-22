@@ -47,9 +47,27 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     inLanguage: "he-IL",
     articleSection: article.category,
     keywords: article.keywords.join(", "),
-    author: { "@type": "Organization", name: "מערכת Israel Today" },
-    publisher: { "@type": "Organization", name: "Israel Today", url: baseUrl },
-    mainEntityOfPage: `${baseUrl}/articles/${article.slug}`
+    author: { "@type": "Organization", name: "מערכת Israel Today", url: baseUrl + "/about" },
+    publisher: {
+      "@type": "NewsMediaOrganization",
+      name: "Israel Today",
+      url: baseUrl,
+      areaServed: { "@type": "Country", name: "Israel" },
+      inLanguage: "he-IL"
+    },
+    articleBody: article.sections.map(section => section.paragraphs.join(" ")).join(" "),
+    wordCount: article.sections.reduce((total, section) => total + section.paragraphs.join(" ").trim().split(/\\s+/).filter(Boolean).length, 0),
+    isAccessibleForFree: true,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${baseUrl}/articles/${article.slug}` }
+  };
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ראשי", item: baseUrl },
+      { "@type": "ListItem", position: 2, name: article.category, item: `${baseUrl}/#category-${article.category}` },
+      { "@type": "ListItem", position: 3, name: article.title, item: `${baseUrl}/articles/${article.slug}` }
+    ]
   };
 
   return (
@@ -62,11 +80,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </div></header>
       <main className="container">
         <article className="article" itemScope itemType="https://schema.org/NewsArticle">
-          <div className="breadcrumbs"><Link href="/">ראשי</Link>　/　{article.category}</div>
+          <nav className="breadcrumbs" aria-label="פירורי לחם"><Link href="/">ראשי</Link>　/　<span>{article.category}</span></nav>
           <div className="article-category">{article.category}</div>
           <h1 itemProp="headline">{article.title}</h1>
           <p className="article-lead" itemProp="description">{article.intro}</p>
-          <div className="article-meta">פורסם: {article.displayDate}　•　{article.readTime}　•　מערכת Israel Today</div>
+          <div className="article-meta"><time dateTime={article.publishedAt} itemProp="datePublished">פורסם: {article.displayDate}</time>　•　{article.readTime}　•　מערכת Israel Today</div>
           <div className="article-body">
             {article.sections.map((section) => (
               <section key={section.heading}>
@@ -86,6 +104,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </main>
       <footer className="footer"><div className="container"><div className="brand" style={{color:"white"}}>Israel <span>Today</span></div><p>חדשות מישראל — דיוק, שקיפות וקישורים למקורות.</p><small>© 2026 Israel Today</small></div></footer>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
     </>
   );
 }
