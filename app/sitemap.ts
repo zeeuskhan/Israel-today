@@ -22,14 +22,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly" as const,
       priority: 0.3
     })),
-    ...Array.from(new Set(articles.map((article) => article.category))).map((category) => ({
+    ...Array.from(new Set(articles.map((article) => article.category))).filter((category) => articles.filter((article) => article.category === category || (category === "ביטחון" && article.category === "ביטחון ודיפלומטיה")).length >= 2).map((category) => ({
       url: `${baseUrl}${categoryPath(category)}`,
       changeFrequency: "daily" as const,
       priority: 0.7
     })),
     ...articles.map((article) => ({
       url: `${baseUrl}/articles/${article.slug}`,
-      lastModified: new Date(article.publishedAt),
       changeFrequency: "daily" as const,
       priority: 0.8
     }))
