@@ -89,7 +89,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="article-category">{article.category}</div>
           <h1 itemProp="headline">{article.title}</h1>
           <p className="article-lead" itemProp="description">{article.intro}</p>
-          <div className="article-meta"><time dateTime={article.publishedAt} itemProp="datePublished">פורסם: {new Intl.DateTimeFormat("he-IL", { timeZone: "Asia/Jerusalem", dateStyle: "long" }).format(new Date(article.publishedAt))}</time>　•　{article.readTime}　•　מערכת Israel Today</div>
+          <div className="article-meta"><time dateTime={article.publishedAt} itemProp="datePublished">פורסם: {new Intl.DateTimeFormat("he-IL", { timeZone: "Asia/Jerusalem", dateStyle: "long" }).format(new Date(article.publishedAt))}</time>　•　{article.readTime}　•　<Link href="/authors/editorial-team">מערכת Israel Today</Link></div>
           <div className="article-body">
             {article.sections.map((section) => (
               <section key={section.heading}>
