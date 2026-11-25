@@ -140,3 +140,68 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #1c70
   .article-body{font-size:12pt;line-height:1.7}
   .sources{break-inside:avoid}
 }
+
+
+/* Mobile-first usability refinements */
+html,body{max-width:100%;overflow-x:hidden}
+img,video,iframe{max-width:100%;height:auto}
+.container{width:min(1160px,calc(100% - 40px))}
+.nav{scrollbar-width:thin;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+.nav a{flex:0 0 auto;min-height:38px;display:inline-flex;align-items:center}
+.search-form input{min-height:44px}
+.search-form button,.article-actions button,.pagination a,.pagination span{min-height:44px}
+.news-card h3,.latest-item h3,.category-entry h2,.search-result h2{overflow-wrap:anywhere}
+.article{width:100%;padding-inline:0}
+.article-body{overflow-wrap:break-word}
+.sources{overflow-wrap:anywhere}
+@media(max-width:760px){
+  .container{width:calc(100% - 32px)}
+  .masthead{padding:16px 0 10px}
+  .brandrow{gap:10px}
+  .search-form{margin-top:4px}
+  .nav{gap:8px;padding-top:10px}
+  .nav a{padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:13px}
+  .breaking .container{align-items:flex-start;flex-direction:column;gap:7px}
+  .news-mast{padding:18px 0}
+  .lead-story{padding:22px;min-height:0}
+  .lead-story h1{font-size:clamp(25px,7vw,34px)}
+  .latest-panel{padding:16px}
+  .news-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .thumb{height:112px}
+  .news-card-body{padding:12px}
+  .news-card h3{font-size:16px}
+  .news-card p{font-size:13px;line-height:1.6}
+  .section-head h2{font-size:19px}
+  .category-pills{gap:7px}
+  .category-pills a{padding:8px 10px;font-size:13px}
+  .footer-inner{display:grid;grid-template-columns:1fr}
+  .footer-links{display:flex;flex-wrap:wrap;gap:10px}
+  .article{margin:22px auto}
+  .article h1{font-size:clamp(28px,7vw,38px)}
+  .article-lead{font-size:18px;line-height:1.65}
+  .article-meta{line-height:1.8}
+  .article-body{font-size:16px;line-height:1.85}
+  .article-body h2{font-size:21px}
+  .more-link{line-height:2.2}
+}
+@media(max-width:420px){
+  .container{width:calc(100% - 26px)}
+  .brand{font-size:29px}
+  .tagline{font-size:12px}
+  .search-form{gap:6px}
+  .search-form input{padding:10px;font-size:14px}
+  .search-form button{padding:9px 11px;font-size:14px}
+  .news-grid{grid-template-columns:1fr}
+  .thumb{height:135px}
+  .news-card-body{padding:14px}
+  .news-card h3{font-size:18px}
+  .side-stack{grid-template-columns:1fr}
+  .pagination{gap:7px}
+  .pagination a,.pagination span{min-width:36px;padding:6px}
+  .article-actions{gap:7px}
+  .article-actions button{flex:1}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
