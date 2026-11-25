@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
       <p>אפשר לנסות לטעון מחדש. אם הבעיה נמשכת, חזרו לעמוד הראשי.</p>
       <div className="article-actions">
         <button type="button" onClick={() => reset()}>נסה שוב</button>
-        <a className="read-more" href="/">לעמוד הראשי ←</a>
+        <Link className="read-more" href="/">לעמוד הראשי ←</Link>
       </div>
     </main>
   );
