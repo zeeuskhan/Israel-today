@@ -72,7 +72,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       const sameCategory = candidate.category === article.category ? 2 : 0;
       return { article: candidate, score: sharedKeywords * 3 + sameCategory };
     })
-    .filter(({ score }) => score > 0)
     .sort((a, b) =>
       b.score - a.score ||
       Date.parse(b.article.publishedAt) - Date.parse(a.article.publishedAt)
